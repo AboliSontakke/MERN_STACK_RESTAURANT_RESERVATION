@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant Reservation</title>
+    <style>
+      /* Light theme */
+      body.light {
+        background-color: #fff;
+        color: #000;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      /* Dark theme */
+      body.dark {
+        background-color: #121212;
+        color: #fff;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      /* Button styling */
+      #theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 50px;
+        background-color: rgb(24, 25, 24);
+        color: white;
+        font-weight: bold;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s, box-shadow 0.3s;
+      }
+
+      #theme-toggle:hover {
+        background-color: rgb(79, 173, 245);
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      #theme-toggle:focus {
+        outline: none;
+      }
+
+      /* Adding transition to the root element for a smooth page load */
+      body {
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      /* Font size control styling */
+      .font-size-control {
+        position: fixed;
+        bottom: 30px;
+        left: 20px;
+        padding: 15px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        border-radius: 10px;
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .font-size-control label {
+        margin-right: 10px;
+        font-size: 16px;
+      }
+
+      .font-size-control input {
+        width: 150px;
+        margin-right: 10px;
+        border-radius: 10px;
+        height: 5px;
+        background-color: #ccc;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      .font-size-control input::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #79a8e3;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .font-size-control input::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        background: #79a8e3;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      /* Show font size in large text */
+      .font-size-value {
+        font-size: 18px;
+        font-weight: bold;
+        margin-left: 10px;
+      }
+
+      /* Apply font size to the html element */
+      html {
+        font-size: 16px; /* Default font size */
+        transition: font-size 0.3s ease;
+      }
+
+      /* Apply font size to all elements */
+      * {
+        transition: font-size 0.3s ease;
+      }
+    </style>
+  </head>
+  <body class="light"> <!-- Default to light mode -->
+    <div id="root"></div>
+
+    <!-- Theme toggle button -->
+    <button id="theme-toggle">Switch to Dark Mode</button>
+
+    <!-- Font Size Control -->
+    <div class="font-size-control">
+      <label for="font-size">Font Size:</label>
+      <input type="range" id="font-size" min="10" max="30" value="16" step="1" />
+      <span id="font-size-value">16px</span>
+    </div>
+
+    <script>
+      // JavaScript to toggle light/dark mode
+      const toggleButton = document.getElementById('theme-toggle');
+
+      // Check saved theme in localStorage
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      document.body.classList.add(currentTheme);
+      toggleButton.textContent = currentTheme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode';
+
+      toggleButton.addEventListener('click', () => {
+        // Toggle the theme class
+        const newTheme = document.body.classList.contains('light') ? 'dark' : 'light';
+        document.body.classList.remove('light', 'dark');
+        document.body.classList.add(newTheme);
+
+        // Update the button text
+        toggleButton.textContent = newTheme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode';
+
+        // Save the selected theme in localStorage
+        localStorage.setItem('theme', newTheme);
+      });
+
+      // Font Size Adjustment
+      const fontSizeControl = document.getElementById('font-size');
+      const fontSizeValue = document.getElementById('font-size-value');
+
+      fontSizeControl.addEventListener('input', (e) => {
+        const fontSize = e.target.value;
+        fontSizeValue.textContent = `${fontSize}px`;
+
+        // Apply font size to the html element (affects the entire website)
+        document.documentElement.style.fontSize = `${fontSize}px`;
+      });
+    </script>
+    
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
